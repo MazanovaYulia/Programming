@@ -1,0 +1,58 @@
+/*********************************************
+* Автор: Мазанова Юлия, ПИ-211               *
+* Дата: 19.11.2021                           *
+* Название: 01 Частота повторений            *
+*********************************************/
+
+https://onlinegdb.com/fqeDy3gUsj
+
+#include <stdio.h>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <math.h>
+
+using namespace std;
+
+int main()
+{
+  ifstream file;
+  file.open("combinations");
+    
+  if (!file.is_open()) {
+      cout << "Файл не найден.\n";
+      return 0;
+  }
+    
+  string stroke;
+  int ut_count = 0; 
+  int tu_count = 0; 
+  int t_count  = 0;
+  int u_count  = 0;
+    
+  getline(file, stroke, '\0');
+  file.close();
+    
+  for (int i = 0; i < stroke.length() - 1; ++i){
+    
+    if (stroke[i] == 't'){
+      ++t_count;
+    }
+   
+    if (stroke[i] == 'u'){
+      ++u_count;
+    }
+   
+    if (stroke[i] == 't' and stroke[i + 1] == 'u'){
+      ++tu_count;
+    }
+   
+    if (stroke[i] == 'u' and stroke[i + 1] == 't'){
+      ++ut_count;
+    }
+    
+  }
+  
+  cout << stroke << endl;
+  cout << "ut:" << ut_count << endl << "tu:" << tu_count << endl << "t:" << t_count << endl << "u:" << u_count;
+}
