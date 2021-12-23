@@ -4,55 +4,37 @@
 * Название: 01 Частота повторений            *
 *********************************************/
 
-https://onlinegdb.com/fqeDy3gUsj
+https://onlinegdb.com/9uBnd81D1
 
-#include <stdio.h>
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <math.h>
 
+#include<iostream>
+#include <map>                                          // STL контейнер map
+#include <cstdio>
+#include <cstring>
+ 
 using namespace std;
 
-int main()
-{
-  ifstream file;
-  file.open("combinations");
-    
-  if (!file.is_open()) {
-      cout << "Файл не найден.\n";
-      return 0;
-  }
-    
-  string stroke;
-  int ut_count = 0; 
-  int tu_count = 0; 
-  int t_count  = 0;
-  int u_count  = 0;
-    
-  getline(file, stroke, '\0');
-  file.close();
-    
-  for (int i = 0; i < stroke.length() - 1; ++i){
-    
-    if (stroke[i] == 't'){
-      ++t_count;
-    }
+int main() {
    
-    if (stroke[i] == 'u'){
-      ++u_count;
+    setlocale(LC_ALL, "rus");
+ 
+    map <char,int> chars;                               // создаем контейнер
+    map <char,int>::iterator begin, at, end;
+ 
+    char str[500];
+    cout << "Введите строку (без пробелов):" << endl;
+    scanf("%500s", str);
+ 
+    for(unsigned int i = 0; i < strlen(str); i++){
+        chars[str[i]]++;                                // считаем каждый символ
     }
-   
-    if (stroke[i] == 't' and stroke[i + 1] == 'u'){
-      ++tu_count;
-    }
-   
-    if (stroke[i] == 'u' and stroke[i + 1] == 't'){
-      ++ut_count;
+ 
+    begin = chars.begin();
+    end   = chars.end();
+    
+    for(at = begin; at != end; at++) {
+        cout << at-> first << ' ' << at->second << endl; 
     }
     
-  }
-  
-  cout << stroke << endl;
-  cout << "ut:" << ut_count << endl << "tu:" << tu_count << endl << "t:" << t_count << endl << "u:" << u_count;
+    return 0;
 }
