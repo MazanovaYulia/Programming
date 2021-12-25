@@ -1,40 +1,124 @@
-/*********************************************
-* Автор: Мазанова Юлия, ПИ-211               *
-* Дата: 19.11.2021                           *
-* Название: 01 Частота повторений            *
-*********************************************/
+/****************************************
+* Автор: Мазанова Ю.Н.                  *
+* Дата: 19.11.2021                      *
+* Блок 03: 01 Частота повторений        *
+****************************************/
 
-https://onlinegdb.com/9uBnd81D1
+https://onlinegdb.com/m9VxLPfRe
 
+#include <iostream>
+#include <string> 
+#include <fstream> 
+#include <stdio.h>
+#include <vector>
 
-#include<iostream>
-#include <map>                                          // STL контейнер map
-#include <cstdio>
-#include <cstring>
- 
 using namespace std;
 
+vector<string> OneLettersCombinations() {
+    vector<string> oneLettersCombinations;
+    string bukovka;
+
+    for (int bukovkaValue = 0; bukovkaValue < 26; bukovkaValue++) {
+        bukovka = 97 + bukovkaValue;
+        oneLettersCombinations.push_back(bukovka);
+    }
+
+    return oneLettersCombinations;
+}
+
+vector<string> TwoLettersCombinations() {
+    vector<string> twoLettersCombinations;
+    string combi, firstTLC, secondTLC;
+
+    for (int firstTLCValue = 0; firstTLCValue < 26; firstTLCValue++) {
+        firstTLC = 97 + firstTLCValue;
+        for (int secondTLCValue = 0; secondTLCValue < 26; secondTLCValue++) {
+            secondTLC = 97 + secondTLCValue;
+            combi = firstTLC + secondTLC;
+            twoLettersCombinations.push_back(combi);
+        }
+    }
+
+    return twoLettersCombinations;
+}
+
+string Text(string FileName) {
+    fstream file;
+    string text;
+    char line;
+    char nextLetter = '\n';
+
+    file.open(FileName);
+    while (file.get(line)) {
+        if (line != nextLetter) {
+            text += line;
+        }
+        else {
+            text += " ";
+        }
+    }
+    return text;
+}
+
+int countOccurrence(string line, string text) {
+    int textLong = text.length();
+    int lineLong = line.length();
+    int Value = 0;
+    int counter = 0;
+
+    for (int symbol = 0; symbol < textLong; ++symbol) {
+        char Symbol = text[symbol];
+        char needSymbol = line[Value];
+        if (Symbol == needSymbol) {
+            ++Value;
+            if (Value == lineLong) {
+                ++counter;
+                Value = 0;
+            }
+        }
+        else {
+            Value = 0;
+        }
+    }
+
+    return counter;
+}
+
+void outputCombinations(string text, vector<string> oneLettersCombinations,
+    vector<string> twoLettersCombinations) {
+    string combination = "";
+    int combi = 0;
+
+    int OneLC = oneLettersCombinations.size();
+    int TwoLC = twoLettersCombinations.size();
+
+    cout << "Частота повторения букв:" << endl;
+    for (int combinationValue = 0; combinationValue < OneLC; ++combinationValue) {
+        combination = oneLettersCombinations[combinationValue];
+        combi = countOccurrence(combination, text);
+        if (combi != 0) {
+            cout << combination << " - " << combi << endl;
+        }
+    }
+
+    cout << endl;
+
+    cout << "Частота повторения двухбуквенных комбинаций:" << endl;
+    for (int combinationIndex = 0; combinationIndex < TwoLC; ++combinationIndex) {
+        combination = twoLettersCombinations[combinationIndex];
+        combi = countOccurrence(combination, text);
+        if (combi != 0) {
+            cout << combination << " - " << combi << endl;
+        }
+    }
+}
+
 int main() {
-   
-    setlocale(LC_ALL, "rus");
- 
-    map <char,int> chars;                               // создаем контейнер
-    map <char,int>::iterator begin, at, end;
- 
-    char str[500];
-    cout << "Введите строку (без пробелов):" << endl;
-    scanf("%500s", str);
- 
-    for(unsigned int i = 0; i < strlen(str); i++){
-        chars[str[i]]++;                                // считаем каждый символ
-    }
- 
-    begin = chars.begin();
-    end   = chars.end();
-    
-    for(at = begin; at != end; at++) {
-        cout << at-> first << ' ' << at->second << endl; 
-    }
-    
-    return 0;
+    setlocale(LC_ALL, "ru");
+
+    string text = Text("text.txt");
+    vector<string> oneLettersCombinations = OneLettersCombinations();
+    vector<string> twoLettersCombinations = TwoLettersCombinations();
+
+    outputCombinations(text, oneLettersCombinations, twoLettersCombinations);
 }
