@@ -1,0 +1,143 @@
+/************************************
+* Автор: Мазанова Ю.Н.              *
+* Дата: 20.11.2021                  *
+* Блок 03: 02 Каледарь в консоли    *
+************************************/
+
+https://onlinegdb.com/_uc33Alrr
+
+
+#include <iostream>
+#include <string> 
+#include <fstream> 
+#include <stdio.h>
+
+using namespace std;
+
+string days[7] = {"ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"};
+string months[12] = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", 
+                     "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
+
+bool LeepYear(int year) {
+    
+    if (year % 400 == 0) {
+        return true;
+    
+    } else if (year % 100 == 0) {
+        return false;
+    
+    } else if (year % 4 == 0) {
+        return true;
+    
+    } else {
+        return false;
+    }
+}
+
+int firstDay(int year) {
+    int dayValue = 5;
+    
+    for (int yearValue = 1600; yearValue < year; yearValue++) {
+       
+        if (LeepYear(yearValue)) {
+            dayValue += 2;
+        
+        } else {
+            dayValue += 1;
+        }
+    }
+    
+    dayValue %= 7;
+    return dayValue;
+}
+
+int firstDayValue = 0;
+int daysInMonths(int monthValue, int year) {
+    
+    if (monthValue != 1) {
+        
+        if (monthValue == 3 || monthValue == 5 || monthValue == 8 || monthValue == 10) {
+            return 30;
+        
+        } else {
+            return 31;
+         }
+    
+        } else {
+            
+            if (LeepYear(year)) {
+            return 29;
+            
+        } else {
+            return 28;
+        }
+    }
+}
+
+void drawMonth(int year, int monthValue) {
+    bool calendarIsDrawed = false;
+    int daysInMonth = daysInMonths(monthValue, year);
+    int dayNumber = 1;
+    cout << months[monthValue] << ":" << endl;
+    
+    for (int dayValue = 0; dayValue < 7; dayValue++) {
+        cout << days[dayValue] << "\t";
+    }
+    
+    cout << endl;
+    
+    for (int lineValue = 0; lineValue < 6; lineValue++) {
+        
+        for (int dayValue = 0; dayValue < 7; dayValue++) {
+            
+            if (!calendarIsDrawed) {
+                
+                if (firstDayValue != 0) {
+                    cout << "  \t"; 
+                    firstDayValue--;
+                
+                } else {
+                    
+                    if (dayNumber <= daysInMonth) {
+                        cout << dayNumber << "\t";
+                        
+                        if (dayNumber == daysInMonth) {
+                            calendarIsDrawed = true;
+                            firstDayValue = dayValue + 1;
+                            firstDayValue %= 7;
+                            break;
+                        }
+                        dayNumber++;
+                    
+                    } else {
+                        firstDayValue = dayValue;
+                        break;
+                    }
+                }
+            }
+        }
+        
+        cout << endl;
+    }
+    
+    cout << endl << endl << endl;
+}
+
+void drawCalendar(int year) {
+    firstDayValue = firstDay(year);
+    
+    for (int monthValue = 0; monthValue < 12; monthValue++) {
+        drawMonth(year, monthValue);
+    }
+}
+
+int main() {
+    setlocale(LC_ALL, "ru");
+    
+    int year;
+    cout << "Введите год: ";
+    cin >> year;
+    
+    drawCalendar(year);
+}
+
