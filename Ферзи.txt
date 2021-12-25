@@ -1,0 +1,84 @@
+/****************************************
+* Автор: Мазанова Ю.Н.                  *
+* Дата: 23.11.2021                      *
+* Блок 03: 04 Восемь ферзей             *
+****************************************/
+
+https://onlinegdb.com/3C2USP3mx
+
+
+#include <iostream>
+#include <stdio.h>
+
+using namespace std;
+
+const int size = 8; 
+int board[size][size];
+int resultsCount = 0; 
+
+void showBoard() {
+    
+    for(int lon = 0; lon < size; lon++) {
+       
+        for(int width = 0; width < size; width++) {
+          cout << ((board[lon][width]) ? "Q " : ". ");
+        }
+        
+        cout << '\n';
+    }
+}
+
+bool tryQueen(int lon, int width) {
+    
+    for(int count = 0; count < lon; count++) {
+        
+        if(board[count][width]) {
+            return false;
+        }
+    }
+    
+    for(int count = 1; count <= lon && width-count >= 0; count++) {
+        
+        if(board[lon-count][width-count]) {
+            return false;
+        }
+    }
+    
+    for(int count = 1; count <= lon && width+count < size; count++) {
+        
+        if(board[lon-count][width+count]) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+ 
+void setQueen(int lineNumber) {
+   
+    if(lineNumber == size) {
+        showBoard();
+        cout << "Вариант - " << resultsCount++ << "\n\n";
+        return; 
+    }
+    
+    for(int count = 0; count < size; count++) {
+
+        if(tryQueen(lineNumber, count)) {
+            board[lineNumber][count] = 1;
+            setQueen(lineNumber+1);
+            board[lineNumber][count] = 0;
+        }
+    }
+    
+    return; 
+}
+
+int main() {
+    
+    setlocale(LC_ALL, "ru");
+    setQueen(0);
+    cout << endl << "Всего вариантов: " << resultsCount << endl;
+
+    return 0;
+}
