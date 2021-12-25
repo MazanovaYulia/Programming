@@ -1,0 +1,177 @@
+/*************************************
+* Автор: Мазанова Ю.Н.               *
+* Дата: 22.11.2021                   *
+* Блок 03: 03 Перевод арабских чисел *
+*************************************/
+
+https://onlinegdb.com/2akSZ3yMJ
+
+#include <iostream>
+#include <string> 
+#include <fstream> 
+#include <stdio.h>
+
+using namespace std;
+
+int operation() {
+    int operationStyle;
+    
+    cout << "1: Арабские > Римские" << endl;
+    cout << "2: Римские > Арабские" << endl;
+    cout << "Тип операции: ";
+    cin >> operationStyle;
+    cout << endl;
+    
+    return operationStyle;
+}
+
+int arabicNumber() {
+    int arabic;
+    
+    cout << "Введите арабское число: ";
+    cin >> arabic;
+    
+    return arabic;
+}
+
+string romanNumber() {
+    string roman;
+    
+    cout << "Введите римское число: ";
+    cin >> roman;
+    
+    return roman;
+}
+
+string codeArabicRoman(int arabic) {
+    string roman = "";
+    while (arabic > 0) {
+        if (arabic >= 1000) {
+            arabic -= 1000;
+            roman += "M";
+        } else if (arabic >= 900) {
+            arabic -= 900;
+            roman += "CM";
+        } else if (arabic >= 500) {
+            arabic -= 500;
+            roman += "D";
+        } else if (arabic >= 400) {
+            arabic -= 400;
+            roman += "CD";
+        } else if (arabic >= 100) {
+            arabic -= 100;
+            roman += "C";
+        } else if (arabic >= 90) {
+            arabic -= 90;
+            roman += "XC";
+        } else if (arabic >= 50) {
+            arabic -= 50;
+            roman += "L";
+        } else if (arabic >= 40) {
+            arabic -= 40;
+            roman += "XL";
+        } else if (arabic >= 10) {
+            arabic -= 10;
+            roman += "X";
+        } else if (arabic >= 9) {
+            arabic -= 9;
+            roman += "IX";
+        } else if (arabic >= 5) {
+            arabic -= 5;
+            roman += "V";
+        } else if (arabic >= 4) {
+            arabic -= 4;
+            roman += "IV";
+        } else {
+            arabic -= 1;
+            roman += "I";
+        }
+    }
+    return roman;
+}
+
+int codeRomanArabic(string roman) {
+    int arabic = 0;
+    int RomanNumber = roman.length();
+    
+    char previousSymbol = '-';
+    for (int symbolValue = 0; symbolValue < RomanNumber; ++symbolValue) {
+        char symbol = roman[symbolValue];
+        if (symbol == 'M') {
+            if (previousSymbol == 'C') {
+                arabic -= 100;
+                arabic += 900;;
+            } else {
+                arabic += 1000;
+            }
+            previousSymbol = 'M';
+        } else if (symbol == 'C') {
+            if (previousSymbol == 'X') {
+                arabic -= 10;
+                arabic += 90;;
+            } else {
+                arabic += 100;
+            }
+            previousSymbol = 'C';
+        } else if (symbol == 'D') {
+            if (previousSymbol == 'C') {
+                arabic -= 100;
+                arabic += 400;;
+            } else {
+                arabic += 500;
+            }
+            previousSymbol = 'D';
+        } else if (symbol == 'L') {
+            if (previousSymbol == 'X') {
+                arabic -= 10;
+                arabic += 40;;
+            } else {
+                arabic += 50;
+            }
+            previousSymbol = 'L';
+        } else if (symbol == 'X') {
+            if (previousSymbol == 'I') {
+                arabic -= 1;
+                arabic += 9;;
+            } else {
+                arabic += 10;
+            }
+            previousSymbol = 'X';
+        } else if (symbol == 'V') {
+            if (previousSymbol == 'I') {
+                arabic -= 1;
+                arabic += 4;;
+            } else {
+                arabic += 5;
+            }
+            previousSymbol = 'V';
+        } else if (symbol == 'I') {
+            arabic += 1;
+            previousSymbol = 'I';
+        }
+    }
+    
+    return arabic;
+}
+
+int main() {
+    setlocale(LC_ALL, "ru");
+    
+    int operationStyle = operation();
+    
+    if (operationStyle == 1) {
+        int arabic = arabicNumber();
+        string roman = codeArabicRoman(arabic);
+        cout << "Римское число: " << roman;
+    
+    } else if (operationStyle == 2) {
+        string roman = romanNumber();
+        int arabic = codeRomanArabic(roman);
+        cout << "Арабское число: " << arabic;
+    
+    } else {
+        cout << "Ошибка! Неверные входные данные";
+    }
+    
+    return 0;
+}
