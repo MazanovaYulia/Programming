@@ -1,0 +1,50 @@
+/**************************************
+Дата: 12.02.2022
+Автор: Мазанова Ю.Н., ПИ-211
+Задание 1/1 - Вычислить a в n степени
+***************************************/
+
+https://onlinegdb.com/20oK0BN5-
+
+using System;
+class DegreeOfNumber {
+  static void Main() {
+
+        int Value = 1;
+      Console.WriteLine("Enter the number: ");
+        int Number = Convert.ToInt32(Console.ReadLine());
+      Console.WriteLine("Enter the degree: ");
+        int Degree = Convert.ToInt32(Console.ReadLine());
+      
+        for (int Counter = 1; Counter <= Degree; Counter++) {
+          Value *= Number;
+        }
+        
+    Console.WriteLine("A number to the degree of: {0}", Value);
+  }
+}
+
+/**************************************
+Дата: 12.02.2022
+Автор: Мазанова Ю.Н., ПИ-211
+Задание 1/2 - Найти число
+***************************************/
+
+https://onlinegdb.com/tDShd18D_
+
+using System;
+class FindingANumber {
+  static void Main() {
+   
+    Console.WriteLine("Введите число от 100 до 999: ");
+    int Number = Convert.ToInt32(Console.ReadLine());
+            
+      int FirstDigit = Number / 100;
+      int SecondDigit = (Number / 10) % 10;
+      int ThirdDigit = Number % 10;
+            
+    Console.Write(FirstDigit);
+    Console.Write(ThirdDigit);
+    Console.Write(SecondDigit);
+  }
+}
