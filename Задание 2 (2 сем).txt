@@ -1,0 +1,37 @@
+/********************************************************************
+Автор: Мазанова Ю.Н., ПИ-211                                        *
+Задание 2/1: Класс для хранения информации об электронном документе *
+********************************************************************/
+
+using System;
+using System.Reflection;
+
+
+namespace ElectronicDocument
+  {
+     class LaboratoryWork
+       {
+         public struct Denotation
+           {
+             public string FileName;
+             public string Author;
+             public string Keywords;
+             public string Subject;
+            }
+ 
+  [STAThread]
+  static void Main(string[] args) {
+     Console.WriteLine("Public:");
+         foreach(FieldInfo fi in typeof(Denotation).GetFields() )
+           {
+              Console.WriteLine("\t"+ fi.Name);
+            }
+     Console.WriteLine("NonPublic:");
+         foreach(FieldInfo fi in
+         typeof(Denotation).GetFields(BindingFlags.NonPublic | BindingFlags.Instance) )
+            {
+              Console.WriteLine("\t"+ fi.Name);
+            }
+        }
+    }
+}
