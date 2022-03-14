@@ -29,3 +29,38 @@ namespace ElectronicDocument {
         }
     }
 }
+/********************************************************************************
+Автор: Мазанова Ю.Н., ПИ-211                                                    *
+Задание 2/2: Классы-наследники для документов MS Word, PDF, MS Excel, TXT, HTML *
+*********************************************************************************/
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Inheritance
+{
+    public abstract class ElectronicDocument
+        {
+            public string FileName {get; set;}
+             public string Author {get; set;}
+             public string Keywords {get; set;}
+             public string Subject {get; set;}
+
+            protected ElectronicDocument() { }
+
+            protected ElectronicDocument(string fileName, string author, string keywords, string subject)
+            {
+                FileName = fileName;
+                Author = author;
+                Keywords = keywords;
+                Subject = subject;
+            }
+
+            public abstract void Info();
+        }
+}
+
+
