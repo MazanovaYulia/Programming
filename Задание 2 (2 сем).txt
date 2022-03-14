@@ -7,12 +7,9 @@ using System;
 using System.Reflection;
 
 
-namespace ElectronicDocument
-  {
-     class LaboratoryWork
-       {
-         public struct Denotation
-           {
+namespace ElectronicDocument {
+     class LaboratoryWork {
+         public struct Denotation {
              public string FileName;
              public string Author;
              public string Keywords;
@@ -22,14 +19,11 @@ namespace ElectronicDocument
   [STAThread]
   static void Main(string[] args) {
      Console.WriteLine("Public:");
-         foreach(FieldInfo fi in typeof(Denotation).GetFields() )
-           {
+         foreach(FieldInfo fi in typeof(Denotation).GetFields() ) {
               Console.WriteLine("\t"+ fi.Name);
             }
      Console.WriteLine("NonPublic:");
-         foreach(FieldInfo fi in
-         typeof(Denotation).GetFields(BindingFlags.NonPublic | BindingFlags.Instance) )
-            {
+         foreach(FieldInfo fi in typeof(Denotation).GetFields(BindingFlags.NonPublic | BindingFlags.Instance) ) {
               Console.WriteLine("\t"+ fi.Name);
             }
         }
