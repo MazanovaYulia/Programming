@@ -40,27 +40,95 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Inheritance
-{
-    public abstract class ElectronicDocument
-        {
-            public string FileName {get; set;}
-             public string Author {get; set;}
-             public string Keywords {get; set;}
-             public string Subject {get; set;}
+namespace Inheritance {
+  public abstract class ElectronicDocument {
+    public string FileName {get; set;}
+    public string Author {get; set;}
+    public string Keywords {get; set;}
+    public string Subject {get; set;}
+    public string Type { get; protected set; }
 
-            protected ElectronicDocument() { }
+    protected ElectronicDocument() { }
 
-            protected ElectronicDocument(string fileName, string author, string keywords, string subject)
-            {
-                FileName = fileName;
-                Author = author;
-                Keywords = keywords;
-                Subject = subject;
-            }
-
-            public abstract void Info();
-        }
+    protected ElectronicDocument(string fileName, string author, string keywords, string subject) {
+      FileName = fileName;
+      Author = author;
+      Keywords = keywords;
+      Subject = subject;
+    }
+      public abstract void Info();
+  }
 }
 
+class MSWord : ElectronicDocument {
+  public MS Word(string fileName, string author, string keywords, string subject) {
+    Type = "Microsoft Word";
+  }
+  public override void Info() {
+    Console.WriteLine("Тип документа: " + Type + "\n" + "Имя файла: " + fileName + "\n" + "Автор: " + author + "\n" + "Ключевые слова: " + keywords + "\n" + "Путь к файлу: " + subject + "\n" );
+  }
+}
 
+class PDF : ElectronicDocument {
+  public PDF(string fileName, string author, string keywords, string subject) {
+    Type = "PDF";
+  }
+  public override void Info() {
+    Console.WriteLine("Тип документа: " + Type + "\n" + "Имя файла: " + fileName + "\n" + "Автор: " + author + "\n" + "Ключевые слова: " + keywords + "\n" + "Путь к файлу: " + subject + "\n" );
+  }
+}
+
+class MSExcel : ElectronicDocument {
+  public MSExcel(string fileName, string author, string keywords, string subject) {
+    Type = "Microsoft Excel";
+  }
+  public override void Info() {
+    Console.WriteLine("Тип документа: " + Type + "\n" + "Имя файла: " + fileName + "\n" + "Автор: " + author + "\n" + "Ключевые слова: " + keywords + "\n" + "Путь к файлу: " + subject + "\n" );
+  }
+}
+
+class TXT : ElectronicDocument {
+  public TXT(string fileName, string author, string keywords, string subject) {
+    Type = "TXT";
+  }
+  public override void Info() {
+    Console.WriteLine("Тип документа: " + Type + "\n" + "Имя файла: " + fileName + "\n" + "Автор: " + author + "\n" + "Ключевые слова: " + keywords + "\n" + "Путь к файлу: " + subject + "\n" );
+  }
+}
+
+class HTML : ElectronicDocument {
+  public HTML(string fileName, string author, string keywords, string subject) {
+    Type = "HTML";
+  }
+  public override void Info() {
+    Console.WriteLine("Тип документа: " + Type + "\n" + "Имя файла: " + fileName + "\n" + "Автор: " + author + "\n" + "Ключевые слова: " + keywords + "\n" + "Путь к файлу: " + subject + "\n" );
+  }
+}
+
+[STAThread]
+static void Main(string[] args) {
+  Console.WriteLine("Public:");
+    foreach(FieldInfo fi in typeof(Denotation).GetFields() ) {
+      Console.WriteLine("\t"+ fi.Name);
+    }
+  Console.WriteLine("NonPublic:");
+    foreach(FieldInfo fi in typeof(Denotation).GetFields(BindingFlags.NonPublic | BindingFlags.Instance) ) {
+      Console.WriteLine("\t"+ fi.Name);
+    }  
+}
+  
+class Program {
+  static void Main(string[] args) {
+    List<ElectronicDocument> documents = new List<ElectronicDocument>();
+    documents.Add(new MSWord("Лаб1"));
+    documents.Add(new PDF("Лаб2"));
+    documents.Add(new MSExcel("Лаб3"));
+    documents.Add(new TXT("Лаб4"));
+    documents.Add(new HTML("Лаб5"));
+    
+  foreach (ElectronicDocument document in documents)
+    document.Info();
+
+    Console.ReadKey();
+   }
+}
