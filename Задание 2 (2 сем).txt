@@ -120,11 +120,11 @@ static void Main(string[] args) {
 class Program {
   static void Main(string[] args) {
     List<ElectronicDocument> documents = new List<ElectronicDocument>();
-    documents.Add(new MSWord("Лаб1"));
-    documents.Add(new PDF("Лаб2"));
-    documents.Add(new MSExcel("Лаб3"));
-    documents.Add(new TXT("Лаб4"));
-    documents.Add(new HTML("Лаб5"));
+    documents.Add(new MSWord("Лаб1", "Мазанова Ю.Н.", "программирование"));
+    documents.Add(new PDF("Лаб2", "Мазанова Ю.Н.", "с#"));
+    documents.Add(new MSExcel("Лаб3", "Мазанова Ю.Н.", "таблица"));
+    documents.Add(new TXT("Лаб4", "Мазанова Ю.Н.", "код"));
+    documents.Add(new HTML("Лаб5", "Мазанова Ю.Н.", "страница"));
     
   foreach (ElectronicDocument document in documents)
     document.Info();
