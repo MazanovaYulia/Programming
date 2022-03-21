@@ -132,3 +132,167 @@ class Program {
     Console.ReadKey();
    }
 }
+
+using Inheritance;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Inheritance
+{
+    public class ElectronicDocument
+    {
+        public string FileName { get; set; }
+        public string Author { get; set; }
+        public string Keywords { get; set; }
+        public string Subject { get; set; }
+        public string Type { get; protected set; }
+
+        protected ElectronicDocument() { }
+
+        protected ElectronicDocument(string fileName, string author, string keywords, string subject, string Type)
+        {
+            FileName = fileName;
+            Author = author;
+            Keywords = keywords;
+            Subject = subject;
+        }
+        public virtual void Infom()
+        {
+            Console.WriteLine("ElectronicDocument.Infom");
+        }
+    }
+}
+
+public class MSWord : ElectronicDocument
+{
+    public MSWord()
+    {
+    }
+
+    public MSWord(string fileName, string author, string keywords, string subject, string Type)
+    {
+        Type = "Microsoft Word";
+    }
+    public override void Infom()
+    {
+        Console.WriteLine("Тип документа: " + Type + "\n" + "Имя файла: " + FileName + "\n" + "Автор: " + Author + "\n" + "Ключевые слова: " + Keywords + "\n" + "Путь к файлу: " + Subject + "\n");
+    }
+}
+
+public class PDF : ElectronicDocument
+{
+    public PDF()
+    {
+    }
+
+    public PDF(string fileName, string author, string keywords, string subject, string Type)
+    {
+        Type = "PDF";
+    }
+    public override void Infom()
+    {
+        Console.WriteLine("Тип документа: " + Type + "\n" + "Имя файла: " + FileName + "\n" + "Автор: " + Author + "\n" + "Ключевые слова: " + Keywords + "\n" + "Путь к файлу: " + Subject + "\n");
+    }
+}
+
+public class MSExcel : ElectronicDocument
+{
+    public MSExcel()
+    {
+    }
+
+    public MSExcel(string fileName, string author, string keywords, string subject, string Type)
+    {
+        Type = "Microsoft Excel";
+    }
+    public override void Infom()
+    {
+        Console.WriteLine("Тип документа: " + Type + "\n" + "Имя файла: " + FileName + "\n" + "Автор: " + Author + "\n" + "Ключевые слова: " + Keywords + "\n" + "Путь к файлу: " + Subject + "\n");
+    }
+}
+
+public class TXT : ElectronicDocument
+{
+    public TXT()
+    {
+    }
+
+    public TXT(string fileName, string author, string keywords, string subject, string Type)
+    {
+        Type = "TXT";
+    }
+    public override void Infom()
+    {
+        Console.WriteLine("Тип документа: " + Type + "\n" + "Имя файла: " + FileName + "\n" + "Автор: " + Author + "\n" + "Ключевые слова: " + Keywords + "\n" + "Путь к файлу: " + Subject + "\n");
+    }
+}
+
+public class HTML : ElectronicDocument
+{
+    public string Version;
+    public HTML()
+
+    {
+        Type = "HTML";
+    }
+
+    public HTML(string fileName, string author, string keywords, string subject, string Type, string version) 
+    {
+        FileName = fileName;
+        Author = author;
+        Keywords = keywords;
+        Subject = subject;
+        Type = "HTML";
+        Version = version;
+    }
+    public override void Infom()
+    {
+        Console.WriteLine("Тип документа: " + Type + "\n" + "Имя файла: " + FileName + "\n" + "Автор: " + Author + "\n" + "Ключевые слова: " + Keywords + "\n" + "Путь к файлу: " + Subject + "\n"+ "Версия: " + Version+ "\n");
+    }
+}
+
+//[STAThread]
+//private static void Main()
+//{
+    //Console.WriteLine("Public:");
+    //foreach (FieldInfo fi in typeof(Denotation).GetFields())
+   // {
+       // Console.WriteLine("\t" + fi.Name);
+  //  }
+  //  Console.WriteLine("NonPublic:");
+   // foreach (FieldInfo fi in typeof(Denotation).GetFields(BindingFlags.NonPublic | BindingFlags.Instance))
+   // {
+     //   Console.WriteLine("\t" + fi.Name);
+   // }
+//}
+
+internal class Denotation
+{
+}
+
+class Program
+{
+    private static void InfomElectronicDocument (ElectronicDocument electronicdocument)
+    {
+        electronicdocument.Infom();
+    }
+    static void Main(string[] args)
+    {
+        ElectronicDocument MSW = new MSWord();
+        ElectronicDocument pdf = new PDF();
+        ElectronicDocument MSE = new MSExcel();
+        ElectronicDocument txt = new TXT();
+        ElectronicDocument html = new HTML();
+
+        InfomElectronicDocument(MSW);
+        InfomElectronicDocument(pdf);
+        InfomElectronicDocument(MSE);
+        InfomElectronicDocument(txt);
+        InfomElectronicDocument(html);
+        Console.ReadKey();
+    }
+}
