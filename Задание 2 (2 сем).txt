@@ -33,106 +33,6 @@ namespace ElectronicDocument {
 Автор: Мазанова Ю.Н., ПИ-211                                                    *
 Задание 2/2: Классы-наследники для документов MS Word, PDF, MS Excel, TXT, HTML *
 *********************************************************************************/
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Inheritance {
-  public abstract class ElectronicDocument {
-    public string FileName {get; set;}
-    public string Author {get; set;}
-    public string Keywords {get; set;}
-    public string Subject {get; set;}
-    public string Type { get; protected set; }
-
-    protected ElectronicDocument() { }
-
-    protected ElectronicDocument(string fileName, string author, string keywords, string subject) {
-      FileName = fileName;
-      Author = author;
-      Keywords = keywords;
-      Subject = subject;
-    }
-      public abstract void Info();
-  }
-}
-
-class MSWord : ElectronicDocument {
-  public MS Word(string fileName, string author, string keywords, string subject) {
-    Type = "Microsoft Word";
-  }
-  public override void Info() {
-    Console.WriteLine("Тип документа: " + Type + "\n" + "Имя файла: " + fileName + "\n" + "Автор: " + author + "\n" + "Ключевые слова: " + keywords + "\n" + "Путь к файлу: " + subject + "\n" );
-  }
-}
-
-class PDF : ElectronicDocument {
-  public PDF(string fileName, string author, string keywords, string subject) {
-    Type = "PDF";
-  }
-  public override void Info() {
-    Console.WriteLine("Тип документа: " + Type + "\n" + "Имя файла: " + fileName + "\n" + "Автор: " + author + "\n" + "Ключевые слова: " + keywords + "\n" + "Путь к файлу: " + subject + "\n" );
-  }
-}
-
-class MSExcel : ElectronicDocument {
-  public MSExcel(string fileName, string author, string keywords, string subject) {
-    Type = "Microsoft Excel";
-  }
-  public override void Info() {
-    Console.WriteLine("Тип документа: " + Type + "\n" + "Имя файла: " + fileName + "\n" + "Автор: " + author + "\n" + "Ключевые слова: " + keywords + "\n" + "Путь к файлу: " + subject + "\n" );
-  }
-}
-
-class TXT : ElectronicDocument {
-  public TXT(string fileName, string author, string keywords, string subject) {
-    Type = "TXT";
-  }
-  public override void Info() {
-    Console.WriteLine("Тип документа: " + Type + "\n" + "Имя файла: " + fileName + "\n" + "Автор: " + author + "\n" + "Ключевые слова: " + keywords + "\n" + "Путь к файлу: " + subject + "\n" );
-  }
-}
-
-class HTML : ElectronicDocument {
-  public HTML(string fileName, string author, string keywords, string subject) {
-    Type = "HTML";
-  }
-  public override void Info() {
-    Console.WriteLine("Тип документа: " + Type + "\n" + "Имя файла: " + fileName + "\n" + "Автор: " + author + "\n" + "Ключевые слова: " + keywords + "\n" + "Путь к файлу: " + subject + "\n" );
-  }
-}
-
-[STAThread]
-static void Main(string[] args) {
-  Console.WriteLine("Public:");
-    foreach(FieldInfo fi in typeof(Denotation).GetFields() ) {
-      Console.WriteLine("\t"+ fi.Name);
-    }
-  Console.WriteLine("NonPublic:");
-    foreach(FieldInfo fi in typeof(Denotation).GetFields(BindingFlags.NonPublic | BindingFlags.Instance) ) {
-      Console.WriteLine("\t"+ fi.Name);
-    }  
-}
-  
-class Program {
-  static void Main(string[] args) {
-    List<ElectronicDocument> documents = new List<ElectronicDocument>();
-    documents.Add(new MSWord("Лаб1", "Мазанова Ю.Н.", "программирование"));
-    documents.Add(new PDF("Лаб2", "Мазанова Ю.Н.", "с#"));
-    documents.Add(new MSExcel("Лаб3", "Мазанова Ю.Н.", "таблица"));
-    documents.Add(new TXT("Лаб4", "Мазанова Ю.Н.", "код"));
-    documents.Add(new HTML("Лаб5", "Мазанова Ю.Н.", "страница"));
-    
-  foreach (ElectronicDocument document in documents)
-    document.Info();
-
-    Console.ReadKey();
-   }
-}
-
 using Inheritance;
 using System;
 using System.Collections.Generic;
@@ -151,9 +51,9 @@ namespace Inheritance
         public string Subject { get; set; }
         public string Type { get; protected set; }
 
-        protected ElectronicDocument() { }
+        public ElectronicDocument() { }
 
-        protected ElectronicDocument(string fileName, string author, string keywords, string subject, string Type)
+        public ElectronicDocument(string fileName, string author, string keywords, string subject, string Type)
         {
             FileName = fileName;
             Author = author;
@@ -175,8 +75,12 @@ public class MSWord : ElectronicDocument
 
     public MSWord(string fileName, string author, string keywords, string subject, string Type)
     {
-        Type = "Microsoft Word";
+        FileName = fileName;
+        Author = author;
+        Keywords = keywords;
+        Subject = subject;
     }
+
     public override void Infom()
     {
         Console.WriteLine("Тип документа: " + Type + "\n" + "Имя файла: " + FileName + "\n" + "Автор: " + Author + "\n" + "Ключевые слова: " + Keywords + "\n" + "Путь к файлу: " + Subject + "\n");
@@ -231,68 +135,121 @@ public class TXT : ElectronicDocument
     }
 }
 
-public class HTML : ElectronicDocument
-{
-    public string Version;
-    public HTML()
+class Singleton {
+    private static Singleton instance;
 
+    public string Name { get; private set; }
+    private static object syncRoot = new Object();
+   
+
+    public void ShowMenu()
     {
-        Type = "HTML";
-    }
 
-    public HTML(string fileName, string author, string keywords, string subject, string Type, string version) 
+        Console.WriteLine("1 - Doc\n2 -TXTL\n3 - PDF");
+        string name = Console.ReadLine();
+        ElectronicDocument ED;
+        switch (name)
+        {
+            case "1":
+                ED = new MSWord("123","456","79","","");               
+                break;
+            case "2":
+                ED = new TXT();
+                break;
+            case "3":
+                ED = new PDF();
+                break;
+            default:
+                ED = new ElectronicDocument();
+                Console.WriteLine("Ошибка");
+                break;
+        }
+        
+        ED.Infom();
+
+    }
+    /*
+    protected HTMLSingleton(string name)
     {
-        FileName = fileName;
-        Author = author;
-        Keywords = keywords;
-        Subject = subject;
-        Type = "HTML";
-        Version = version;
+        this.Name = name;
+        switch (name)
+        {
+            case "1":
+                Console.WriteLine("Имя файла: ");
+                break;
+            case "2":
+                Console.WriteLine("Автор: ");
+                break;
+            case "3":
+                Console.WriteLine("Ключевые слова: ");
+                break;
+            default:
+                Console.WriteLine("Ошибка");
+                break;
+        }
     }
-    public override void Infom()
+    */
+
+    public static Singleton getInstance()
     {
-        Console.WriteLine("Тип документа: " + Type + "\n" + "Имя файла: " + FileName + "\n" + "Автор: " + Author + "\n" + "Ключевые слова: " + Keywords + "\n" + "Путь к файлу: " + Subject + "\n"+ "Версия: " + Version+ "\n");
+        if (instance == null)
+        {
+            lock (syncRoot)
+            {
+                if (instance == null)
+                    instance = new Singleton();
+            }
+        }
+        return instance;
     }
-}
-
-//[STAThread]
-//private static void Main()
-//{
-    //Console.WriteLine("Public:");
-    //foreach (FieldInfo fi in typeof(Denotation).GetFields())
-   // {
-       // Console.WriteLine("\t" + fi.Name);
-  //  }
-  //  Console.WriteLine("NonPublic:");
-   // foreach (FieldInfo fi in typeof(Denotation).GetFields(BindingFlags.NonPublic | BindingFlags.Instance))
-   // {
-     //   Console.WriteLine("\t" + fi.Name);
-   // }
-//}
-
-internal class Denotation
-{
 }
 
 class Program
 {
-    private static void InfomElectronicDocument (ElectronicDocument electronicdocument)
+    private static void InfomElectronicDocument(ElectronicDocument electronicdocument)
     {
         electronicdocument.Infom();
     }
     static void Main(string[] args)
     {
-        ElectronicDocument MSW = new MSWord();
+
+        while (true)
+        {
+            Singleton.getInstance().ShowMenu();
+        }
+        /*
+        string name = Console.ReadLine();
+
+        switch (name)
+        {
+            case "Word":
+                HTMLSingleton singleton = HTMLSingleton.getInstance(name);
+                ElectronicDocument MSW = new MSWord();
+                break;
+            case "2":
+                Console.WriteLine("Автор: ");
+                break;
+            case "3":
+                Console.WriteLine("Ключевые слова: ");
+                break;
+            default:
+                Console.WriteLine("Ошибка");
+                break;
+        }
+        */
+
+      //  HTMLSingleton singleton = HTMLSingleton.getInstance("asdas");
+     /*
         ElectronicDocument pdf = new PDF();
         ElectronicDocument MSE = new MSExcel();
         ElectronicDocument txt = new TXT();
-        ElectronicDocument html = new HTML();
-
+       
+        
         InfomElectronicDocument(MSW);
         InfomElectronicDocument(pdf);
         InfomElectronicDocument(MSE);
-        InfomElectronicDocument(txt);
-        InfomElectronicDocument(html);
-        Console.ReadKey();
+        InfomElectronicDocument(txt);*/
+        //Console.ReadKey();
+        Console.ReadLine();
     }
 }
