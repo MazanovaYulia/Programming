@@ -1,0 +1,21 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LAB3Programming
+{
+    class SquareMatrix
+    {
+        const int NumRowCol = 5;
+        int[,] Matrix = new int[NumRowCol, NumRowCol];
+        Random rnd = new Random();
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+        }
+    }
+}
