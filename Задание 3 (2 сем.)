@@ -6,13 +6,23 @@ using System.Threading.Tasks;
 
 namespace LAB3Programming
 {
-    class SquareMatrix
+    public class SquareMatrix
     {
+        private int[,] data;
 
-    }
-    class Program
-    {
-        static void Main(string[] args)
+        private int row;
+        public int Row { get => this.row; }
+        private int col;
+        public int Col { get => this.col; }
+
+        public SquareMatrix(int row, int col)
+        {
+            this.row = row;
+            this.col = col;
+            this.data = new int[row, col];
+        }
+
+        public void WriteMatrix()
         {
             const int col = 5, row = 5;
 
@@ -22,7 +32,7 @@ namespace LAB3Programming
 
             for (int CounterJ = 0; CounterJ < col; CounterJ++)
             {
-                for (int CounterI = 0; CounterI < col; CounterI++)
+                for (int CounterI = 0; CounterI < row; CounterI++)
                 {
                     Matrix1[CounterI, CounterJ] = rand.Next(0, 10);
                     Console.Write(Matrix1[CounterI, CounterJ]);
@@ -30,9 +40,10 @@ namespace LAB3Programming
                 Console.WriteLine();
             }
             Console.WriteLine();
+
             for (int CounterJ = 0; CounterJ < col; CounterJ++)
             {
-                for (int CounterI = 0; CounterI < col; CounterI++)
+                for (int CounterI = 0; CounterI < row; CounterI++)
                 {
                     Matrix2[CounterI, CounterJ] = Matrix1[(col - 1) - CounterI, CounterJ];
                     Console.Write(Matrix2[CounterI, CounterJ]);
@@ -41,5 +52,31 @@ namespace LAB3Programming
             }
             Console.ReadKey();
         }
+
+        public static SumMatrix(Matrix1, Matrix2)
+        {
+            SquareMatrix resMass = new Matrix(a.N);
+            for (int i = 0; i < a.N; i++)
+            {
+                for (int j = 0; j < b.N; j++)
+                {
+                    resMass[i, j] = a[i, j] + b[i, j];
+                }
+            }
+            return resMass;
+        }
+        // Перегрузка сложения
+        public static Matrix operator +(Matrix a, Matrix b)
+        {
+            return Matrix.Sum(a, b);
+        }
     }
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                
+            }
+        }
+   
 }
